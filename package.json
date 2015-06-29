@@ -1,0 +1,22 @@
+{
+  "name": "clock2",
+  "version": "0.1.0",
+  "description": "a timer (count up/down)",
+  "main": "index.html",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp-concat": "~2.6.0",
+    "gulp": "~3.9.0",
+    "gulp-babel": "~5.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "clock",
+    "javascript",
+    "es6"
+  ],
+  "author": "ryan rampersad",
+  "license": "BSD-2-Clause"
+}
