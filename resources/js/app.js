@@ -40,6 +40,23 @@ function get_time_elapsed(start, end) {
   return diff;
 }
 
+function get_specificity_down(t) {
+  function between(x, a, b) {return x > a && x < b;}
+
+  var r;
+  if (between(t, -120000, 120000)) {
+    r = ['m', 's']
+  } else if (between(t, -5400000, 5400000)) {
+    r = ['h', 'm'];
+  }  else if (between(t, -7200000, 7200000)) {
+    r = ['h'];
+  } else {
+    r = ['m'];
+  }
+
+  return r;
+}
+
 var CountUp = React.createClass({
   render: function() {
 
@@ -73,7 +90,8 @@ var CountDown = React.createClass({
     }
 
     var time = humanizeDuration(this.props.remaining, {
-      units: ['h', 'm'],
+      // units: ['h', 'm', 's'],
+      units: get_specificity_down(this.props.remaining),
       round: true
     });
     var string = time;

@@ -6,7 +6,7 @@ body {
 #container {
   color: #222;
   text-align: center;
-  padding-top: 10rem;
+  padding-top: 1rem;
   vertical-align: middle;
 }
 
@@ -30,16 +30,35 @@ body {
   border-bottom: 2px solid #999;
 }
 
+/* media query */
+@media screen
+  and (min-device-width: 1200px) {
+    #container {
+      padding-top: 10rem;
+    }
+}
+@media screen
+  and (max-device-width: 640px) {
+    html {
+      font-size: 12px;
+    }
+    #container {
+      padding-top: 4rem;
+    }
+}
+
 #control-panel {
   color: #000;
   background-color: #fff;
   position: absolute;
   z-index: 1000;
+  opacity: .5;
 }
 #control-panel:hover {
   background-color: #fff;
   color: #000;
-  transition: background-color .5s, color .5s;
+  transition: background-color .5s, color .5s, opacity .1s;
+  opacity: 1;
 }
 #handle {
   padding: 1em 1em 1em 1em;
