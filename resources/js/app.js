@@ -48,16 +48,13 @@ var CountUp = React.createClass({
       return null;
     }
 
-    // var time = moment.duration(this.props.elapsed);
-    // var string = time.humanize(false);
-
     var time = humanizeDuration(this.props.elapsed, {
       units: ['h', 'm'],
       round: true
     });
     var string = time;
 
-    var display = [<span className='number'>{string}</span>, ' elapsed'];
+    var display = [<span key={1} className='number'>{string}</span>, ' elapsed'];
 
     return (
       <div className='count up'>
@@ -75,9 +72,6 @@ var CountDown = React.createClass({
       return null;
     }
 
-    // var time = moment.duration(this.props.remaining);
-    // var string = time.humanize(false);
-
     var time = humanizeDuration(this.props.remaining, {
       units: ['h', 'm'],
       round: true
@@ -86,7 +80,7 @@ var CountDown = React.createClass({
 
     var indicator = (this.props.remaining > 0) ? 'remaining' : 'over';
 
-    var display = [<span className='number'>{string}</span>, ' ', indicator];
+    var display = [<span key={1} className='number'>{string}</span>, ' ', indicator];
 
     document.title = string + ' ' + indicator + ' - timer';
 
