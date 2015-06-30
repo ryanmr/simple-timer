@@ -17,7 +17,8 @@ gulp.task('js', function(){
 gulp.task('js-vendor', function(){
   var files = [
     'resources/js/vendor/react-with-addons.js',
-    'resources/js/vendor/moment.js',
+    // 'resources/js/vendor/moment.js',
+    'resources/js/vendor/humanize-duration.js',
     'resources/js/vendor/zepto.js'
   ];
   return gulp.src(files)
