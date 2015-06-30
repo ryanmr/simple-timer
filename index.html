@@ -4,20 +4,30 @@
 <meta charset="utf-8">
 <title>Clock</title>
 
-<script src="resources/build/js/all.js" charset="utf-8"></script>
+<script src="resources/build/js/vendor.js" charset="utf-8"></script>
+<script src="resources/build/js/app.js" charset="utf-8"></script>
+
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="resources/css/app.css">
 
 </head>
 <body>
 
-<div class="container">
-
-  <div class="count-up">
-    
+<div id="control-panel">
+  <h4 id="handle">Control Panel</h4>
+  <div class="inner">
+    <fieldset>
+      <label>Duration: </label>
+      <input type="number" id="duration" value="60" placeholder="minutes" title="the duration for the timer" />
+      <label>Late Start Offset: </label>
+      <input type="number" id="offset" value="0" placeholder="0" title="if you experience a late start, add the offset from the you actually wanted" />
+      <input type="button" id="save" value="Save" />
+    </fieldset>
   </div>
+</div>
 
-  <div class="count-down">
+<div id="container">
 
-  </div>
 
 </div>
 

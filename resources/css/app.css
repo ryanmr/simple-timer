@@ -1,0 +1,67 @@
+body {
+  background-color: #efefef;
+  font-family: sans-serif;
+}
+
+#container {
+  color: #222;
+  text-align: center;
+  padding-top: 10em;
+  vertical-align: middle;
+}
+
+.count {
+  font-family: 'Roboto Slab', serif;
+  font-size: 2rem;
+  padding: 1rem 0 1rem 0;
+  margin: 0 1rem 0 1rem;
+}
+
+.count .number {
+  font-weight: bold;
+  font-size: 4rem;
+}
+
+.up {
+}
+
+.down {
+  border-bottom: 2px solid #999;
+}
+
+#control-panel {
+  color: #000;
+  background-color: #fff;
+  position: absolute;
+  z-index: 1000;
+}
+#control-panel:hover {
+  background-color: #fff;
+  color: #000;
+  transition: background-color .5s, color .5s;
+}
+#handle {
+  padding: 1em 1em 1em 1em;
+  margin: 0em;
+}
+.inner {
+  padding: 1em;
+  margin: 1em;
+  display: none;
+}
+#control-panel:hover .inner {
+  display: block;
+}
+#control-panel label {
+  display: block;
+}
+#control-panel input {
+  display: block;
+}
+#control-panel.very-visible {
+  color: #000;
+  background-color: #fff;
+}
+#control-panel.very-visible .inner {
+  display: block;
+}
