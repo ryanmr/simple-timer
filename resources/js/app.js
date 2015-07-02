@@ -192,7 +192,7 @@ var Timer = React.createClass({
 function start_timers(start, end) {
   console.log('start_timers: start = %o, end = %o', start, end);
 
-  var container = $('#container');
+  var container = $('#container .inner');
   var target = $(container).get(0);
 
   React.render(<Timer start_time={start} end_time={end} />, target);
@@ -226,13 +226,19 @@ function update_control_panel(event) {
 function setup_control_panel(query) {
   console.log('setup_control_panel');
 
+  // click handler for saving
   $('#save').on('click', update_control_panel);
 
+  // click handler for opening/closing the control panel
   $('#control-panel-handle').on('click', function(event){
     $('#control-panel .inner').toggle();
     event.preventDefault();
   });
 
+  // auto-hide on load
+  $('#control-panel .inner').hide();
+
+  // auto-show on no arguments provided
   if (!query.s || !query.e) {
     $('#control-panel .inner').show();
   }
