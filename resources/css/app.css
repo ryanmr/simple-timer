@@ -1,13 +1,28 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
+  margin: 0; padding: 0;
   background-color: #efefef;
   font-family: sans-serif;
+  color: #222;
+  overflow: hidden;
 }
 
 #container {
-  color: #222;
+
+}
+#container .inner {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
   text-align: center;
-  padding-top: 1rem;
-  vertical-align: middle;
+  width: 100%;
 }
 
 .count {
@@ -15,7 +30,7 @@ body {
   font-size: 2rem;
   text-shadow: 1px 2px #fff;
   padding: 1rem 0 1rem 0;
-  margin: 0 1rem 0 1rem;
+  margin: 0 2rem 0 2rem;
 }
 
 .count .number {
@@ -30,21 +45,10 @@ body {
   border-bottom: 2px solid #999;
 }
 
-/* media query */
-@media screen
-  and (min-device-width: 1200px) {
-    #container {
-      padding-top: 10rem;
-    }
-}
-@media screen
-  and (max-device-width: 640px) {
-    html {
-      font-size: 12px;
-    }
-    #container {
-      padding-top: 4rem;
-    }
+@media screen and (min-width: 1200px) {
+  html {
+    font-size: 1.1em;
+  }
 }
 
 #control-panel {
@@ -54,20 +58,24 @@ body {
   z-index: 1000;
   opacity: .5;
 }
+
 #control-panel:hover {
   background-color: #fff;
   color: #000;
-  transition: background-color .5s, color .5s, opacity .1s;
+  transition: background-color .5s,
+              color .5s,
+              opacity .1s;
   opacity: 1;
 }
 #control-panel-handle {
-  padding: 1em 1em 1em 1em;
+  padding: 1rem;
   margin: 0em;
 }
-.inner {
-  padding: 1em;
+#control-panel .inner {
   margin: 1em;
-  display: none;
+}
+#control-panel fieldset {
+  padding: 1rem;
 }
 #control-panel:hover .inner {
   display: block;
@@ -77,11 +85,5 @@ body {
 }
 #control-panel input {
   display: block;
-}
-#control-panel.very-visible {
-  color: #000;
-  background-color: #fff;
-}
-#control-panel.very-visible .inner {
-  display: block;
+  margin-bottom: 1rem;
 }
