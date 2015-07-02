@@ -101,7 +101,7 @@ var CountDown = React.createClass({
   }
 });
 
-var Clock = React.createClass({
+var Timer = React.createClass({
 
   getInitialState: function() {
     return {
@@ -110,13 +110,13 @@ var Clock = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log('Clock:componentDidMount');
+    console.log('Timer: componentDidMount');
     this.timer = setInterval(this.tick, 1000);
     this.tick();
   },
 
   tick: function() {
-    console.log('Clock:tick');
+    console.log('Timer: tick');
 
     this.setState({
       remaining: get_time_remaining(this.props.start_time, this.props.end_time),
@@ -131,7 +131,7 @@ var Clock = React.createClass({
     var end_time = this.props.end_time ? this.props.end_time : null;
 
     if (!this.state.remaining || !this.state.elapsed) {
-      console.log('Clock: not rendered');
+      console.log('Timer: not rendered');
       return null;
     }
 
@@ -150,7 +150,7 @@ function start_timers(start, end) {
   var container = $('#container');
   var target = $(container).get(0);
 
-  React.render(<Clock start_time={start} end_time={end} />, target);
+  React.render(<Timer start_time={start} end_time={end} />, target);
 
 }
 
