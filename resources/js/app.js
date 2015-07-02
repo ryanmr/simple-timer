@@ -1,3 +1,10 @@
+// global scope intact
+(function(){
+
+/**
+ * Get query argument pairs from the hash-symbol-string in a url.
+ * @return object an object containing pairs of argument names and values
+ */
 function get_query_arguments() {
     var qs = (function(a) {
       if (a == "") return {};
@@ -15,22 +22,44 @@ function get_query_arguments() {
   return qs;
 }
 
+/**
+ * Returns the current time in javascript milliseconds.
+ * @return int time in milliseconds
+ */
 function get_now() {
   return (new Date()).getTime();
 }
 
+/**
+ * Get the time remaining based on the current time and the supplied ending time.
+ * @param  int start time when timer started
+ * @param  int end   time when timer ended
+ * @return int       differnece between end and now
+ */
 function get_time_remaining(start, end) {
   var now = get_now();
   var diff = end - now;
   return diff;
 }
 
+/**
+ * Get the time elapsed based on the current time and the supplied starting time
+ * @param  int start time when timer started
+ * @param  int end   time when timer ended
+ * @return int       differnece now and start
+ */
 function get_time_elapsed(start, end) {
   var now = get_now();
   var diff = now - start;
   return diff;
 }
 
+/**
+ * Return an array of time legend signifiers (for humanize-duration.js),
+ * based on ranges of time.
+ * @param  int t a duration of time
+ * @return array   the time legend signifiers
+ */
 function get_specificity_down(t) {
   function between(x, a, b) {return x > a && x < b;}
 
@@ -48,6 +77,9 @@ function get_specificity_down(t) {
   return r;
 }
 
+/**
+ * ReactJS Component: CountUp.
+ */
 var CountUp = React.createClass({
   render: function() {
 
@@ -72,6 +104,9 @@ var CountUp = React.createClass({
   }
 });
 
+/**
+ * ReactJS Component: CountDown.
+ */
 var CountDown = React.createClass({
   render: function() {
 
@@ -81,7 +116,6 @@ var CountDown = React.createClass({
     }
 
     var time = humanizeDuration(this.props.remaining, {
-      // units: ['h', 'm', 's'],
       units: get_specificity_down(this.props.remaining),
       round: true
     });
@@ -101,6 +135,12 @@ var CountDown = React.createClass({
   }
 });
 
+/**
+ * ReactJS Component: Timer.
+ *
+ * Ideally, what this needs is refactoring such that the setInterval is on the outside of this 'class'.
+ * Whatever that structure is, it would become the Timer and this would likely be renamed to TimerDisplay.
+ */
 var Timer = React.createClass({
 
   getInitialState: function() {
@@ -144,6 +184,11 @@ var Timer = React.createClass({
   }
 });
 
+/**
+ * Start the timer.
+ * @param  int start a start time for the timer
+ * @param  int end   a start time for the timer
+ */
 function start_timers(start, end) {
   console.log('start_timers: start = %o, end = %o', start, end);
 
@@ -151,9 +196,12 @@ function start_timers(start, end) {
   var target = $(container).get(0);
 
   React.render(<Timer start_time={start} end_time={end} />, target);
-
 }
 
+/**
+ * Handle the click event for the control panel save action.
+ * @param  object event an event object
+ */
 function update_control_panel(event) {
   console.log('update_control_panel:click');
 
@@ -171,6 +219,10 @@ function update_control_panel(event) {
   location.reload();
 }
 
+/**
+ * Set up the control panel events and default styles.
+ * @param  {[type]} query an object of hash-symbol-string arguments
+ */
 function setup_control_panel(query) {
   console.log('setup_control_panel');
 
@@ -187,6 +239,10 @@ function setup_control_panel(query) {
 
 }
 
+/**
+ * Set up the timer based on available query arguments.
+ * @param  {[type]} query an object of hash-symbol-string arguments
+ */
 function setup_timers(query) {
   console.log('setup_timers');
   if (query.s && query.e) {
@@ -195,6 +251,9 @@ function setup_timers(query) {
   }
 }
 
+/**
+ * Onload: do this.
+ */
 window.onload = function() {
   console.log('window:onload');
 
@@ -205,5 +264,7 @@ window.onload = function() {
   setup_timers(query);
 
   setup_control_panel(query);
-
 };
+
+
+})();
