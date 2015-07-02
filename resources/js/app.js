@@ -15,15 +15,6 @@ function get_query_arguments() {
   return qs;
 }
 
-function encode_timestamp(timestamp) {
-  var n = (timestamp).toString(36);
-  return n;
-}
-
-function decode_timestamp(timestamp) {
-  return parseInt(timestamp, 36);
-}
-
 function get_now() {
   return (new Date()).getTime();
 }
@@ -153,8 +144,8 @@ var Clock = React.createClass({
   }
 });
 
-function start(start, end) {
-  console.log('start: start = %o, end = %o', start, end);
+function start_timers(start, end) {
+  console.log('start_timers: start = %o, end = %o', start, end);
 
   var container = $('#container');
   var target = $(container).get(0);
@@ -163,21 +154,45 @@ function start(start, end) {
 
 }
 
-function setup() {
-  $('#save').on('click', function(event){
-    var duration = $('#duration').val();
+function update_control_panel(event) {
+  console.log('update_control_panel:click');
 
-    // offset
-    // by default offset = 0; otherwise it will move the start_time backwards in time
-    var offset = $('#offset').val();
-    var start = get_now() - (offset * 60 * 1000);
+  var duration = $('#duration').val();
 
-    var end = start + (duration * 60 * 1000)
+  // offset
+  // by default offset = 0; otherwise it will move the start_time backwards in time
+  var offset = $('#offset').val();
+  var start = get_now() - (offset * 60 * 1000);
 
-    var hash = 'd=' + duration + '&e=' + end + '&s=' + start;
-    window.location.hash = hash;
-    location.reload();
+  var end = start + (duration * 60 * 1000)
+
+  var hash = 'd=' + duration + '&e=' + end + '&s=' + start;
+  window.location.hash = hash;
+  location.reload();
+}
+
+function setup_control_panel(query) {
+  console.log('setup_control_panel');
+
+  $('#save').on('click', update_control_panel);
+
+  $('#control-panel-handle').on('click', function(event){
+    $('#control-panel .inner').toggle();
+    event.preventDefault();
   });
+
+  if (!query.s || !query.e) {
+    $('#control-panel .inner').show();
+  }
+
+}
+
+function setup_timers(query) {
+  console.log('setup_timers');
+  if (query.s && query.e) {
+    console.log('onload: q = %o, e = %o', query.s, query.e);
+    start_timers((query.s), (query.e));
+  }
 }
 
 window.onload = function() {
@@ -187,11 +202,8 @@ window.onload = function() {
 
   console.log('onload: query = %o', query);
 
-  if (query.s && query.e) {
-    console.log('onload: q = %o, e = %o', query.s, query.e);
-    start((query.s), (query.e));
-  }
+  setup_timers(query);
 
-  setup();
+  setup_control_panel(query);
 
 };

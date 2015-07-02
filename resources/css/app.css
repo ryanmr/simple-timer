@@ -60,7 +60,7 @@ body {
   transition: background-color .5s, color .5s, opacity .1s;
   opacity: 1;
 }
-#handle {
+#control-panel-handle {
   padding: 1em 1em 1em 1em;
   margin: 0em;
 }
