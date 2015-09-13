@@ -58,6 +58,7 @@ body {
   position: absolute;
   z-index: 1000;
   opacity: .5;
+  max-width: 20rem;
 }
 
 #control-panel:hover {
@@ -82,11 +83,18 @@ body {
   display: block;
 }
 #control-panel label {
+  font-size: .9rem;
   display: block;
 }
 #control-panel input {
+  font-size: .9rem;
   display: block;
   margin-bottom: 1rem;
+  width: 100%;
+}
+.instructions {
+  font-size: .8rem;
+  color: #555;
 }
 
 .footer {
