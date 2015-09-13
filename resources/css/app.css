@@ -29,6 +29,7 @@ body {
   font-family: 'Roboto Slab', serif;
   font-size: 2rem;
   text-shadow: 1px 2px #fff;
+  -webkit-text-shadow: 1px 2px #fff;
   padding: 1rem 0 1rem 0;
   margin: 0 2rem 0 2rem;
 }
@@ -87,3 +88,18 @@ body {
   display: block;
   margin-bottom: 1rem;
 }
+
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+}
+.attribution {
+  text-align: center;
+  font-size: .9rem;
+}
+.attribution a {color: #666; text-decoration: none;}
+.attribution a:hover {color: #85735D; text-decoration: underline;}
+.attribution a:visited {color: #555;}
