@@ -1,0 +1,113 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0; padding: 0;
+  background-color: #efefef;
+  font-family: sans-serif;
+  color: #222;
+  overflow: hidden;
+}
+
+#container {
+
+}
+#container .inner {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  text-align: center;
+  width: 100%;
+}
+
+.count {
+  font-family: 'Roboto Slab', serif;
+  font-size: 2rem;
+  text-shadow: 1px 2px #fff;
+  -webkit-text-shadow: 1px 2px #fff;
+  padding: 1rem 0 1rem 0;
+  margin: 0 2rem 0 2rem;
+}
+
+.count .number {
+  font-weight: bold;
+  font-size: 3.5rem;
+}
+
+.up {
+}
+
+.down {
+  border-bottom: 2px solid #999;
+}
+
+@media screen and (min-width: 1200px) {
+  html {
+    font-size: 1.1em;
+  }
+}
+
+#control-panel {
+  color: #000;
+  background-color: #fff;
+  position: absolute;
+  z-index: 1000;
+  opacity: .5;
+  max-width: 20rem;
+}
+
+#control-panel:hover {
+  background-color: #fff;
+  color: #000;
+  transition: background-color .5s,
+              color .5s,
+              opacity .1s;
+  opacity: 1;
+}
+#control-panel-handle {
+  padding: 1rem;
+  margin: 0em;
+}
+#control-panel .inner {
+  margin: 1em;
+}
+#control-panel fieldset {
+  padding: 1rem;
+}
+#control-panel:hover .inner {
+  display: block;
+}
+#control-panel label {
+  font-size: .9rem;
+  display: block;
+}
+#control-panel input {
+  font-size: .9rem;
+  display: block;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.instructions {
+  font-size: .8rem;
+  color: #555;
+}
+
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+}
+.attribution {
+  text-align: center;
+  font-size: .9rem;
+}
+.attribution a {color: #666; text-decoration: none;}
+.attribution a:hover {color: #85735D; text-decoration: underline;}
+.attribution a:visited {color: #555;}
