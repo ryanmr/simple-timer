@@ -41,8 +41,12 @@
 
       <div v-show="initial.start">
 
-        <div class="count down"></div>
-        <div class="count up"></div>
+        <div v-if="time.remaining && time.elapsed" class="count down">
+          <span class="number">{{ down }}</span> <span class="indicator">{{ down_indicator }}</div>
+        </div>
+        <div v-if="time.remaining && time.elapsed" class="count up">
+          <span class="number">{{ up }}</span> <span class="indicator">{{ up_indicator }}</div>
+        </div>
 
       </div>
 

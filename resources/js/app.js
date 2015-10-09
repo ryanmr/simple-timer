@@ -79,7 +79,7 @@ function get_specificity_down(t) {
 
 // ============================
 
-
+Vue.config.debug = true; // turn on debugging mode
 var app = new Vue({
   el: '#app',
   data: {
@@ -94,7 +94,37 @@ var app = new Vue({
       elapsed: null
     }
 
+  },
+
+  computed: {
+    up: function() {
+      var time = humanizeDuration(this.time.elapsed, {
+        units: ['h', 'm'],
+        round: true
+      });
+      return time;
+    },
+
+    up_indicator: function() {
+      return 'elapsed';
+    },
+
+    down: function() {
+      var time = humanizeDuration(this.time.remaining, {
+        units: get_specificity_down(this.time.remaining),
+        round: true
+      });
+
+      return time;
+    },
+
+    down_indicator: function() {
+      var indicator = (this.time.remaining > 0) ? 'remaining' : 'over';
+      return indicator;
+    }
+
   }
+
 });
 
 
@@ -114,17 +144,17 @@ function start_timers(start, end) {
     end: end
   };
 
-
-  setInterval(function tick(){
+  var tick = function() {
     console.log('tick');
 
     app.$data.time = {
       remaining: get_time_remaining(app.$data.initial.start, app.$data.initial.end),
       elapsed: get_time_elapsed(app.$data.initial.start, app.$data.initial.end)
     };
+  };
 
-  }, 1000);
-
+  tick();
+  setInterval(tick, 1000);
 }
 
 /**
