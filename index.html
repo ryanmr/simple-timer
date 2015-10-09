@@ -14,9 +14,6 @@
 <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="resources/build/css/app.css">
 
-<script src="resources/build/js/vendor.js" charset="utf-8"></script>
-<script src="resources/build/js/app.js" charset="utf-8"></script>
-
 </head>
 <body>
 
@@ -37,10 +34,21 @@
   </div>
 </div>
 
-<div id="container">
-  <div class="inner">
-    <!-- timer -->
+<div id="app">
+
+  <div id="container">
+    <div class="inner">
+
+      <div v-show="initial.start">
+
+        <div class="count down"></div>
+        <div class="count up"></div>
+
+      </div>
+
+    </div>
   </div>
+
 </div>
 
 <footer class="footer">
@@ -48,6 +56,9 @@
     <a href="http://ifupdown.com/?st">ifupdown</a> | <a href="http://ryanrampersad.com/?st">ryan rampersad</a> | <a href="https://github.com/ryanmr/simple-timer">github</a>
   </p>
 </footer>
+
+<script src="resources/build/js/vendor.js" charset="utf-8"></script>
+<script src="resources/build/js/app.js" charset="utf-8"></script>
 
 </body>
 </html>
