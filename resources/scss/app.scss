@@ -13,6 +13,11 @@ body {
   overflow: hidden;
 }
 
+// this comes from vuejs' cloak directive
+// it blocks the pre-render flash
+// to make things look nice
+[v-cloak] { display: none }
+
 #container {
 
 }
@@ -69,7 +74,7 @@ body {
               opacity .1s;
   opacity: 1;
 }
-#control-panel-handle {
+.toggle {
   padding: 1rem;
   margin: 0em;
 }

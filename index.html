@@ -18,6 +18,26 @@
 <body>
 
 <div id="control-panel">
+  <h4 class="toggle" v-on:click.prevent="controlToggle">Control Panel</h4>
+  <div class="inner" v-cloak v-show="visible">
+    <form v-on:submit.prevent="controlSubmit">
+      <fieldset>
+        <label>Duration: </label>
+        <input type="number" v-model="duration" title="the duration for the timer" />
+        <label>Late Start Offset: </label>
+        <input type="number" v-model="offset" title="if you experience a late start, add the offset from the you actually wanted" />
+        <input type="submit" value="Save" />
+        <hr />
+        <p class="instructions">
+          After saving your settings, share the URL &ndash; everyone's timer will be relatively in sync!
+        </p>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+<!--
+<div id="control-panel">
   <h4 id="control-panel-handle">Control Panel</h4>
   <div class="inner">
     <fieldset>
@@ -33,6 +53,7 @@
     </fieldset>
   </div>
 </div>
+-->
 
 <div id="app">
 

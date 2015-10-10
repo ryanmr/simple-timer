@@ -79,9 +79,12 @@ function get_specificity_down(t) {
 
 // ============================
 
-Vue.config.debug = true; // turn on debugging mode
+// debugging mode for vue?
+Vue.config.debug = true;
+
 var app = new Vue({
   el: '#app',
+
   data: {
 
     initial: {
@@ -114,7 +117,6 @@ var app = new Vue({
         units: get_specificity_down(this.time.remaining),
         round: true
       });
-
       return time;
     },
 
@@ -127,6 +129,30 @@ var app = new Vue({
 
 });
 
+var control = new Vue({
+  el: '#control-panel',
+
+  data: {
+
+    duration: 60,
+    offset: 0,
+
+    visible: false
+
+  },
+
+  methods: {
+    controlToggle: function(event) {
+      this.visible = !this.visible;
+    },
+    controlSubmit: function(event) {
+      // this bind allows this external function
+      // to reference 'this' while being elsewhere in scope
+      update_control_panel.bind(this, event);
+    }
+  }
+
+});
 
 
 // ============================
@@ -171,11 +197,13 @@ function start_timers(start, end) {
 function update_control_panel(event) {
   console.log('update_control_panel:click');
 
-  var duration = $('#duration').val();
+  // var duration = $('#duration').val();
+  var duration = this.duration;
 
   // offset
   // by default offset = 0; otherwise it will move the start_time backwards in time
-  var offset = $('#offset').val();
+  // var offset = $('#offset').val();
+  var offset = this.offset;
   var start = get_now() - (offset * 60 * 1000);
 
   var end = start + (duration * 60 * 1000)
@@ -235,7 +263,7 @@ window.onload = function() {
 
   setup_timers(query);
 
-  setup_control_panel(query);
+  // setup_control_panel(query);
 };
 
 
