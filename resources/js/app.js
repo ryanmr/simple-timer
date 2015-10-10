@@ -144,6 +144,10 @@ function start_timers(start, end) {
     end: end
   };
 
+  var title = function(){
+    document.title = app.up + ' ' + app.up_indicator + ' - timer';
+  };
+
   var tick = function() {
     console.log('tick');
 
@@ -151,6 +155,9 @@ function start_timers(start, end) {
       remaining: get_time_remaining(app.$data.initial.start, app.$data.initial.end),
       elapsed: get_time_elapsed(app.$data.initial.start, app.$data.initial.end)
     };
+
+    title();
+
   };
 
   tick();
