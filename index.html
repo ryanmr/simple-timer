@@ -17,17 +17,29 @@
 </head>
 <body>
 
-<div id="control-panel">
-  <h4 class="toggle" v-on:click.prevent="controlToggle">Control Panel</h4>
-  <div class="inner" v-cloak v-show="visible">
+<div id="control-panel" v-cloak>
+  <span class="toggle" v-on:click.prevent="controlToggle" title="Control Panel">
+    &#9776; <span v-show="visible">Control Panel</span>
+  </span>
+  <div class="inner" v-show="visible">
     <form v-on:submit.prevent="controlSubmit">
       <fieldset>
+
         <label>Duration: </label>
-        <input type="number" v-model="duration" title="the duration for the timer" />
+        <input v-model="duration"
+               type="number"
+               title="the duration for the timer"
+               />
         <label>Late Start Offset: </label>
-        <input type="number" v-model="offset" title="if you experience a late start, add the offset from the you actually wanted" />
+        <input v-model="offset"
+               type="number"
+               title="if you experience a late start, add the offset from the you actually wanted"
+               />
+
         <input type="submit" value="Save" />
+
         <hr />
+
         <p class="instructions">
           After saving your settings, share the URL &ndash; everyone's timer will be relatively in sync!
         </p>
@@ -36,37 +48,18 @@
   </div>
 </div>
 
-<!--
-<div id="control-panel">
-  <h4 id="control-panel-handle">Control Panel</h4>
-  <div class="inner">
-    <fieldset>
-      <label>Duration: </label>
-      <input type="number" id="duration" value="60" placeholder="minutes" title="the duration for the timer" />
-      <label>Late Start Offset: </label>
-      <input type="number" id="offset" value="0" placeholder="0" title="if you experience a late start, add the offset from the you actually wanted" />
-      <input type="button" id="save" value="Save" />
-      <hr />
-      <p class="instructions">
-        After saving your settings, share the URL &ndash; everyone's timer will be relatively in sync!
-      </p>
-    </fieldset>
-  </div>
-</div>
--->
-
-<div id="app">
+<div id="app" v-cloak>
 
   <div id="container">
     <div class="inner">
 
-      <div v-show="initial.start">
+      <div v-show="initial.start && initial.end">
 
         <div v-if="time.remaining && time.elapsed" class="count down">
-          <span class="number">{{ down }}</span> <span class="indicator">{{ down_indicator }}</div>
+          <span class="number">{{down}}</span> <span class="indicator">{{down_indicator}}</div>
         </div>
         <div v-if="time.remaining && time.elapsed" class="count up">
-          <span class="number">{{ up }}</span> <span class="indicator">{{ up_indicator }}</div>
+          <span class="number">{{up}}</span> <span class="indicator">{{up_indicator}}</div>
         </div>
 
       </div>

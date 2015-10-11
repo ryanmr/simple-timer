@@ -146,9 +146,9 @@ var control = new Vue({
       this.visible = !this.visible;
     },
     controlSubmit: function(event) {
-      // this bind allows this external function
+      // this apply allows this external function
       // to reference 'this' while being elsewhere in scope
-      update_control_panel.bind(this, event);
+      update_control_panel.apply(this, [event]);
     }
   }
 
@@ -195,14 +195,12 @@ function start_timers(start, end) {
  * @param  object event an event object
  */
 function update_control_panel(event) {
-  console.log('update_control_panel:click');
+  console.log('update_control_panel');
 
-  // var duration = $('#duration').val();
   var duration = this.duration;
 
   // offset
   // by default offset = 0; otherwise it will move the start_time backwards in time
-  // var offset = $('#offset').val();
   var offset = this.offset;
   var start = get_now() - (offset * 60 * 1000);
 
