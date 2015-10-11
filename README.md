@@ -11,7 +11,7 @@ Made With
 ---------
 
 * [npm](https://www.npmjs.com/): to use gulp
-* [gulp](http://gulpjs.com/): to handle concat and babel-js
+* [gulp](http://gulpjs.com/): to handle concat and babel-js (and countless other gulp packages)
 * ~~[react.js](http://facebook.github.io/react/): to handle the UI~~
 * [vue.js](http://vuejs.org/): to handle the ui, plus a tiny bit of data management
 * [humanize-duration.js](https://github.com/EvanHahn/HumanizeDuration.js): to handle human duration time strings
