@@ -1,34 +1,105 @@
-var gulp = require('gulp');
-var babel = require('gulp-babel');
-var concat = require('gulp-concat');
+var gulp = require('gulp'),
+    sass = require('gulp-ruby-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
+    minifycss = require('gulp-minify-css'),
+    jshint = require('gulp-jshint'),
+    uglify = require('gulp-uglify'),
+    imagemin = require('gulp-imagemin'),
+    rename = require('gulp-rename'),
+    concat = require('gulp-concat'),
+    notify = require('gulp-notify'),
+    cache = require('gulp-cache'),
+    livereload = require('gulp-livereload'),
+    del = require('del'),
+    babel = require('gulp-babel'),
+    gulpif = require('gulp-if'),
 
-// personally written javascript
-gulp.task('js', function(){
-  var files = [
+    // special case for cli arguments
+    argv = require('yargs').argv;
+
+var paths = {
+  js: 'resources/build/js/',
+  css: 'resources/build/css/'
+}
+
+var jsfiles = {
+  app: [
     'resources/js/app.js'
-  ];
-  return gulp.src(files)
-        .pipe(concat('app.js'))
-        .pipe(babel())
-        .pipe(gulp.dest('resources/build/js/'));
-});
-
-// javascript written by third party vendors
-gulp.task('js-vendor', function(){
-  var files = [
+  ],
+  vendor: [
+    // 'resources/js/vendor/vue.js',
     'resources/js/vendor/react-with-addons.js',
     'resources/js/vendor/humanize-duration.js',
     'resources/js/vendor/zepto.js'
-  ];
-  return gulp.src(files)
-        .pipe(concat('vendor.js'))
-        .pipe(gulp.dest('resources/build/js/'));
+  ]
+};
+
+var stylefiles = {
+  app: [
+    'resources/scss/app.scss'
+  ],
+  vendor: [
+
+  ]
+};
+
+/*
+  Local app scripts are run through babel, for what it's worth
+  and then divided up between uncompressed and compressed,
+  and sent to their respective locations.
+*/
+gulp.task('js-app', function(){
+  return gulp
+          .src(jsfiles.app)
+          .pipe(concat('app.js'))
+          .pipe(babel())
+          .pipe( gulpif(argv.production, uglify()) )
+          .pipe(gulp.dest(paths.js))
+          .pipe(
+            gulpif(argv.production,
+              notify({ message: 'production: js-app task complete' }),
+              notify({ message: 'js-app task complete' })
+            )
+          );
 });
 
-// basic task: `gulp`
-gulp.task('default', ['js', 'js-vendor']);
+/*
+  Vendor scripts are not run through babel,
+  and they are not perserved against minification.
+*/
+gulp.task('js-vendor', function(){
+  return gulp
+          .src(jsfiles.vendor)
+          .pipe(concat('vendor.js'))
+          .pipe( gulpif(argv.production, uglify()) )
+          .pipe(gulp.dest(paths.js))
+          .pipe(
+            gulpif(argv.production,
+              notify({ message: 'production: js-vendor task complete' }),
+              notify({ message: 'js-vendor task complete' })
+            )
+          );
+});
 
-// watch task: `gulp watch`
+gulp.task('styles-app', function(){
+  return sass(stylefiles.app, {style: 'expanded'})
+          .pipe(autoprefixer('last 5 versions'))
+          .pipe( gulpif(argv.production, minifycss()) )
+          .pipe(gulp.dest(paths.css))
+          .pipe(
+            gulpif(argv.production,
+              notify({ message: 'production: styles-app task complete' }),
+              notify({ message: 'styles-app task complete' })
+            )
+          );
+});
+
+gulp.task('default', ['js-app', 'js-vendor', 'styles-app']);
+
+
 gulp.task('watch', function(){
-  gulp.watch('resources/js/*', ['default']);
+  gulp.start(['js-app', 'js-vendor', 'styles-app']);
+  gulp.watch(jsfiles.app, ['js-app']);
+  gulp.watch(jsfiles.vendor, ['js-vendor']);
+  gulp.watch(stylefiles.app, ['styles-app']);
 });
