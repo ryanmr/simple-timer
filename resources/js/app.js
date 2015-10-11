@@ -77,112 +77,85 @@ function get_specificity_down(t) {
   return r;
 }
 
-/**
- * ReactJS Component: CountUp.
- */
-var CountUp = React.createClass({
-  render: function() {
+// ============================
 
-    if (!this.props.elapsed) {
-      console.log('CountUp: not rendered');
-      return null;
+// debugging mode for vue?
+Vue.config.debug = true;
+
+var app = new Vue({
+  el: '#app',
+
+  data: {
+
+    initial: {
+      start: null,
+      end: null,
+    },
+
+    time: {
+      remaining: null,
+      elapsed: null
     }
-
-    var time = humanizeDuration(this.props.elapsed, {
-      units: ['h', 'm'],
-      round: true
-    });
-    var string = time;
-
-    var display = [<span key={1} className='number'>{string}</span>, ' elapsed'];
-
-    return (
-      <div className='count up'>
-        {display}
-      </div>
-    );
-  }
-});
-
-/**
- * ReactJS Component: CountDown.
- */
-var CountDown = React.createClass({
-  render: function() {
-
-    if (!this.props.remaining) {
-      console.log('CountDown: not rendered');
-      return null;
-    }
-
-    var time = humanizeDuration(this.props.remaining, {
-      units: get_specificity_down(this.props.remaining),
-      round: true
-    });
-    var string = time;
-
-    var indicator = (this.props.remaining > 0) ? 'remaining' : 'over';
-
-    var display = [<span key={1} className='number'>{string}</span>, ' ', indicator];
-
-    document.title = string + ' ' + indicator + ' - timer';
-
-    return (
-      <div className='count down'>
-        {display}
-      </div>
-    );
-  }
-});
-
-/**
- * ReactJS Component: Timer.
- *
- * Ideally, what this needs is refactoring such that the setInterval is on the outside of this 'class'.
- * Whatever that structure is, it would become the Timer and this would likely be renamed to TimerDisplay.
- */
-var Timer = React.createClass({
-
-  getInitialState: function() {
-    return {
-      remaining: null
-    };
-  },
-
-  componentDidMount: function() {
-    console.log('Timer: componentDidMount');
-    this.timer = setInterval(this.tick, 1000);
-    this.tick();
-  },
-
-  tick: function() {
-    console.log('Timer: tick');
-
-    this.setState({
-      remaining: get_time_remaining(this.props.start_time, this.props.end_time),
-      elapsed: get_time_elapsed(this.props.start_time, this.props.end_time)
-    });
 
   },
 
-  render: function() {
+  computed: {
+    up: function() {
+      var time = humanizeDuration(this.time.elapsed, {
+        units: ['h', 'm'],
+        round: true
+      });
+      return time;
+    },
 
-    var start_time = this.props.start_time ? this.props.start_time : null;
-    var end_time = this.props.end_time ? this.props.end_time : null;
+    up_indicator: function() {
+      return 'elapsed';
+    },
 
-    if (!this.state.remaining || !this.state.elapsed) {
-      console.log('Timer: not rendered');
-      return null;
+    down: function() {
+      var time = humanizeDuration(this.time.remaining, {
+        units: get_specificity_down(this.time.remaining),
+        round: true
+      });
+      return time;
+    },
+
+    down_indicator: function() {
+      var indicator = (this.time.remaining > 0) ? 'remaining' : 'over';
+      return indicator;
     }
 
-    return (
-      <div>
-          <CountDown remaining={this.state.remaining} />
-          <CountUp elapsed={this.state.elapsed} />
-      </div>
-    );
   }
+
 });
+
+var control = new Vue({
+  el: '#control-panel',
+
+  data: {
+
+    duration: 60,
+    offset: 0,
+
+    visible: false
+
+  },
+
+  methods: {
+    controlToggle: function(event) {
+      this.visible = !this.visible;
+    },
+    controlSubmit: function(event) {
+      // this apply allows this external function
+      // to reference 'this' while being elsewhere in scope
+      update_control_panel.apply(this, [event]);
+    }
+  }
+
+});
+
+
+// ============================
 
 /**
  * Start the timer.
@@ -192,10 +165,29 @@ var Timer = React.createClass({
 function start_timers(start, end) {
   console.log('start_timers: start = %o, end = %o', start, end);
 
-  var container = $('#container .inner');
-  var target = $(container).get(0);
+  app.$data.initial = {
+    start: start,
+    end: end
+  };
 
-  React.render(<Timer start_time={start} end_time={end} />, target);
+  var title = function(){
+    document.title = app.up + ' ' + app.up_indicator + ' - timer';
+  };
+
+  var tick = function() {
+    console.log('tick');
+
+    app.$data.time = {
+      remaining: get_time_remaining(app.$data.initial.start, app.$data.initial.end),
+      elapsed: get_time_elapsed(app.$data.initial.start, app.$data.initial.end)
+    };
+
+    title();
+
+  };
+
+  tick();
+  setInterval(tick, 1000);
 }
 
 /**
@@ -203,13 +195,13 @@ function start_timers(start, end) {
  * @param  object event an event object
  */
 function update_control_panel(event) {
-  console.log('update_control_panel:click');
+  console.log('update_control_panel');
 
-  var duration = $('#duration').val();
+  var duration = this.duration;
 
   // offset
   // by default offset = 0; otherwise it will move the start_time backwards in time
-  var offset = $('#offset').val();
+  var offset = this.offset;
   var start = get_now() - (offset * 60 * 1000);
 
   var end = start + (duration * 60 * 1000)
@@ -269,7 +261,7 @@ window.onload = function() {
 
   setup_timers(query);
 
-  setup_control_panel(query);
+  // setup_control_panel(query);
 };
 
 

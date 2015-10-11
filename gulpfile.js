@@ -27,8 +27,7 @@ var jsfiles = {
     'resources/js/app.js'
   ],
   vendor: [
-    // 'resources/js/vendor/vue.js',
-    'resources/js/vendor/react-with-addons.js',
+    'resources/js/vendor/vue-1.0.0-beta.3.js',
     'resources/js/vendor/humanize-duration.js',
     'resources/js/vendor/zepto.js'
   ]

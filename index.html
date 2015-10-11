@@ -14,33 +14,59 @@
 <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="resources/build/css/app.css">
 
-<script src="resources/build/js/vendor.js" charset="utf-8"></script>
-<script src="resources/build/js/app.js" charset="utf-8"></script>
-
 </head>
 <body>
 
-<div id="control-panel">
-  <h4 id="control-panel-handle">Control Panel</h4>
-  <div class="inner">
-    <fieldset>
-      <label>Duration: </label>
-      <input type="number" id="duration" value="60" placeholder="minutes" title="the duration for the timer" />
-      <label>Late Start Offset: </label>
-      <input type="number" id="offset" value="0" placeholder="0" title="if you experience a late start, add the offset from the you actually wanted" />
-      <input type="button" id="save" value="Save" />
-      <hr />
-      <p class="instructions">
-        After saving your settings, share the URL &ndash; everyone's timer will be relatively in sync!
-      </p>
-    </fieldset>
+<div id="control-panel" v-cloak>
+  <span class="toggle" v-on:click.prevent="controlToggle" title="Control Panel">
+    &#9776; <span v-show="visible">Control Panel</span>
+  </span>
+  <div class="inner" v-show="visible">
+    <form v-on:submit.prevent="controlSubmit">
+      <fieldset>
+
+        <label>Duration: </label>
+        <input v-model="duration"
+               type="number"
+               title="the duration for the timer"
+               />
+        <label>Late Start Offset: </label>
+        <input v-model="offset"
+               type="number"
+               title="if you experience a late start, add the offset from the you actually wanted"
+               />
+
+        <input type="submit" value="Save" />
+
+        <hr />
+
+        <p class="instructions">
+          After saving your settings, share the URL &ndash; everyone's timer will be relatively in sync!
+        </p>
+      </fieldset>
+    </form>
   </div>
 </div>
 
-<div id="container">
-  <div class="inner">
-    <!-- timer -->
+<div id="app" v-cloak>
+
+  <div id="container">
+    <div class="inner">
+
+      <div v-show="initial.start && initial.end">
+
+        <div v-if="time.remaining && time.elapsed" class="count down">
+          <span class="number">{{down}}</span> <span class="indicator">{{down_indicator}}</div>
+        </div>
+        <div v-if="time.remaining && time.elapsed" class="count up">
+          <span class="number">{{up}}</span> <span class="indicator">{{up_indicator}}</div>
+        </div>
+
+      </div>
+
+    </div>
   </div>
+
 </div>
 
 <footer class="footer">
@@ -48,6 +74,9 @@
     <a href="http://ifupdown.com/?st">ifupdown</a> | <a href="http://ryanrampersad.com/?st">ryan rampersad</a> | <a href="https://github.com/ryanmr/simple-timer">github</a>
   </p>
 </footer>
+
+<script src="resources/build/js/vendor.js" charset="utf-8"></script>
+<script src="resources/build/js/app.js" charset="utf-8"></script>
 
 </body>
 </html>
